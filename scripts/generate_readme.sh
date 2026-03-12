@@ -1,112 +1,100 @@
 #!/usr/bin/env bash
 # generate_readme.sh
-# Scans src/main/java/com/vbforge for problem packages and generates README.md
-
-set -euo pipefail
 
 BASE_SRC="src/main/java/com/vbforge"
 
-# ── Metadata: NUM|SLUG|DIFFICULTY|TAG ────────────────────────────────────────
-declare -A META
-META[1]="two-sum|Easy|Arrays & Hashing Basics"
-META[66]="plus-one|Easy|Arrays & Hashing Basics"
-META[121]="best-time-to-buy-and-sell-stock|Easy|Arrays & Hashing Basics"
-META[217]="contains-duplicate|Easy|Arrays & Hashing Basics"
-META[242]="valid-anagram|Easy|Arrays & Hashing Basics"
-META[283]="move-zeroes|Easy|Arrays & Hashing Basics"
-META[350]="intersection-of-two-arrays-ii|Easy|Arrays & Hashing Basics"
-META[14]="longest-common-prefix|Easy|Strings & Basic Logic"
-META[125]="valid-palindrome|Easy|Strings & Basic Logic"
-META[205]="isomorphic-strings|Easy|Strings & Basic Logic"
-META[344]="reverse-string|Easy|Strings & Basic Logic"
-META[383]="ransom-note|Easy|Strings & Basic Logic"
-META[387]="first-unique-character-in-a-string|Easy|Strings & Basic Logic"
-META[541]="reverse-string-ii|Easy|Strings & Basic Logic"
-META[20]="valid-parentheses|Easy|Stack, Queue & Linked Lists"
-META[21]="merge-two-sorted-lists|Easy|Stack, Queue & Linked Lists"
-META[83]="remove-duplicates-from-sorted-list|Easy|Stack, Queue & Linked Lists"
-META[141]="linked-list-cycle|Easy|Stack, Queue & Linked Lists"
-META[155]="min-stack|Medium|Stack, Queue & Linked Lists"
-META[160]="intersection-of-two-linked-lists|Easy|Stack, Queue & Linked Lists"
-META[234]="palindrome-linked-list|Easy|Stack, Queue & Linked Lists"
-META[171]="excel-sheet-column-number|Easy|Math, Bits & Misc"
-META[202]="happy-number|Easy|Math, Bits & Misc"
-META[204]="count-primes|Medium|Math, Bits & Misc"
-META[268]="missing-number|Easy|Math, Bits & Misc"
-META[326]="power-of-three|Easy|Math, Bits & Misc"
-META[412]="fizz-buzz|Easy|Math, Bits & Misc"
-META[136]="single-number|Easy|Math, Bits & Misc"
-META[169]="majority-element|Easy|Math, Bits & Misc"
-META[461]="hamming-distance|Easy|Math, Bits & Misc"
+get_meta() {
+  case "$1" in
+    1)   echo "two-sum|Easy|Arrays & Hashing Basics" ;;
+    66)  echo "plus-one|Easy|Arrays & Hashing Basics" ;;
+    121) echo "best-time-to-buy-and-sell-stock|Easy|Arrays & Hashing Basics" ;;
+    217) echo "contains-duplicate|Easy|Arrays & Hashing Basics" ;;
+    242) echo "valid-anagram|Easy|Arrays & Hashing Basics" ;;
+    283) echo "move-zeroes|Easy|Arrays & Hashing Basics" ;;
+    350) echo "intersection-of-two-arrays-ii|Easy|Arrays & Hashing Basics" ;;
+    14)  echo "longest-common-prefix|Easy|Strings & Basic Logic" ;;
+    125) echo "valid-palindrome|Easy|Strings & Basic Logic" ;;
+    205) echo "isomorphic-strings|Easy|Strings & Basic Logic" ;;
+    344) echo "reverse-string|Easy|Strings & Basic Logic" ;;
+    383) echo "ransom-note|Easy|Strings & Basic Logic" ;;
+    387) echo "first-unique-character-in-a-string|Easy|Strings & Basic Logic" ;;
+    541) echo "reverse-string-ii|Easy|Strings & Basic Logic" ;;
+    20)  echo "valid-parentheses|Easy|Stack, Queue & Linked Lists" ;;
+    21)  echo "merge-two-sorted-lists|Easy|Stack, Queue & Linked Lists" ;;
+    83)  echo "remove-duplicates-from-sorted-list|Easy|Stack, Queue & Linked Lists" ;;
+    141) echo "linked-list-cycle|Easy|Stack, Queue & Linked Lists" ;;
+    155) echo "min-stack|Medium|Stack, Queue & Linked Lists" ;;
+    160) echo "intersection-of-two-linked-lists|Easy|Stack, Queue & Linked Lists" ;;
+    234) echo "palindrome-linked-list|Easy|Stack, Queue & Linked Lists" ;;
+    171) echo "excel-sheet-column-number|Easy|Math, Bits & Misc" ;;
+    202) echo "happy-number|Easy|Math, Bits & Misc" ;;
+    204) echo "count-primes|Medium|Math, Bits & Misc" ;;
+    268) echo "missing-number|Easy|Math, Bits & Misc" ;;
+    326) echo "power-of-three|Easy|Math, Bits & Misc" ;;
+    412) echo "fizz-buzz|Easy|Math, Bits & Misc" ;;
+    136) echo "single-number|Easy|Math, Bits & Misc" ;;
+    169) echo "majority-element|Easy|Math, Bits & Misc" ;;
+    461) echo "hamming-distance|Easy|Math, Bits & Misc" ;;
+    *)   echo "$(echo "$2" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')|Easy|Uncategorized" ;;
+  esac
+}
 
-# ── Collect and sort packages ─────────────────────────────────────────────────
-mapfile -t PACKAGES < <(
-  find "$BASE_SRC" -maxdepth 1 -type d -name 'p_*' \
+PACKAGES=$(find "$BASE_SRC" -maxdepth 1 -type d -name 'p_*' \
   | sed 's|.*/||' \
-  | sort -t_ -k2 -n
-)
+  | sort -t_ -k2 -n)
 
-total=${#PACKAGES[@]}
-solved=0
-easy=0; medium=0; hard=0
+total=0; solved=0; easy=0; medium=0; hard=0
 
-# First pass — count stats
-for pkg in "${PACKAGES[@]}"; do
-  [[ -f "$BASE_SRC/$pkg/Solution.java" ]] && (( solved++ )) || true
+while IFS= read -r pkg; do
+  [ -z "$pkg" ] && continue
+  total=$((total + 1))
   num=$(echo "$pkg" | cut -d_ -f2)
-  if [[ -n "${META[$num]+_}" ]]; then
-    diff=$(echo "${META[$num]}" | cut -d'|' -f2)
-    case "$diff" in
-      Easy)   (( easy++ ))   ;;
-      Medium) (( medium++ )) ;;
-      Hard)   (( hard++ ))   ;;
-    esac
-  fi
-done
-
-# ── Write README.md ───────────────────────────────────────────────────────────
-{
-cat <<EOF
-# LeetCode Solutions — vbforge
-
-> 🤖 *This file is auto-generated by GitHub Actions. Do not edit manually.*
-
-## 📊 Progress
-
-![Solved](https://img.shields.io/badge/Solved-${solved}-brightgreen) ![Total](https://img.shields.io/badge/Total-${total}-blue) ![Easy](https://img.shields.io/badge/Easy-${easy}-green) ![Medium](https://img.shields.io/badge/Medium-${medium}-yellow) ![Hard](https://img.shields.io/badge/Hard-${hard}-red)
-
-## 📋 Problem List
-
-#### Legend: ✅ solved · ⏳ in-progress
-
-| # | Problem | Difficulty | Status | Tag | Solution |
-|---|---------|------------|--------|-----|----------|
-EOF
-
-row=1
-for pkg in "${PACKAGES[@]}"; do
-  num=$(echo "$pkg" | cut -d_ -f2)
-  # Build title from package name: p_1_Two_Sum → Two Sum
   raw=$(echo "$pkg" | cut -d_ -f3-)
   title="${raw//_/ }"
+  meta=$(get_meta "$num" "$title")
+  diff=$(echo "$meta" | cut -d'|' -f2)
+  [ -f "$BASE_SRC/$pkg/Solution.java" ] && solved=$((solved + 1))
+  case "$diff" in
+    Easy)   easy=$((easy + 1)) ;;
+    Medium) medium=$((medium + 1)) ;;
+    Hard)   hard=$((hard + 1)) ;;
+  esac
+done <<< "$PACKAGES"
 
-  if [[ -n "${META[$num]+_}" ]]; then
-    IFS='|' read -r slug diff tag <<< "${META[$num]}"
-  else
-    slug=$(echo "$title" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-    diff="Easy"
-    tag="Uncategorized"
-  fi
+{
+echo "# LeetCode Solutions — vbforge"
+echo ""
+echo "> 🤖 *This file is auto-generated by GitHub Actions. Do not edit manually.*"
+echo ""
+echo "## 📊 Progress"
+echo ""
+echo "![Solved](https://img.shields.io/badge/Solved-${solved}-brightgreen) ![Total](https://img.shields.io/badge/Total-${total}-blue) ![Easy](https://img.shields.io/badge/Easy-${easy}-green) ![Medium](https://img.shields.io/badge/Medium-${medium}-yellow) ![Hard](https://img.shields.io/badge/Hard-${hard}-red)"
+echo ""
+echo "## 📋 Problem List"
+echo ""
+echo "#### Legend: ✅ solved · ⏳ in-progress"
+echo ""
+echo "| # | Problem | Difficulty | Status | Tag | Solution |"
+echo "|---|---------|------------|--------|-----|----------|"
+
+row=1
+while IFS= read -r pkg; do
+  [ -z "$pkg" ] && continue
+  num=$(echo "$pkg" | cut -d_ -f2)
+  raw=$(echo "$pkg" | cut -d_ -f3-)
+  title="${raw//_/ }"
+  meta=$(get_meta "$num" "$title")
+  slug=$(echo "$meta" | cut -d'|' -f1)
+  diff=$(echo "$meta" | cut -d'|' -f2)
+  tag=$(echo "$meta" | cut -d'|' -f3)
 
   url="https://leetcode.com/problems/${slug}/"
   sol_path="src/main/java/com/vbforge/${pkg}/Solution.java"
 
-  if [[ -f "$BASE_SRC/$pkg/Solution.java" ]]; then
-    status="✅"
-    sol_link="[Solution.java](${sol_path})"
+  if [ -f "$BASE_SRC/$pkg/Solution.java" ]; then
+    status="✅"; sol_link="[Solution.java](${sol_path})"
   else
-    status="⏳"
-    sol_link="—"
+    status="⏳"; sol_link="—"
   fi
 
   case "$diff" in
@@ -117,13 +105,12 @@ for pkg in "${PACKAGES[@]}"; do
   esac
 
   echo "| ${row} | [${num}. ${title}](${url}) | ${diff_icon} ${diff} | ${status} | ${tag} | ${sol_link} |"
-  (( row++ ))
-done
+  row=$((row + 1))
+done <<< "$PACKAGES"
 
 echo ""
 echo "---"
 echo "*Auto-generated. ${solved}/${total} problems solved.*"
-
 } > README.md
 
 echo "[OK] README.md generated — ${total} problems, ${solved} solved."
