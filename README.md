@@ -4,7 +4,7 @@
 
 ## 📊 Progress
 
-![Solved](https://img.shields.io/badge/Solved-21-brightgreen) ![Total](https://img.shields.io/badge/Total-21-blue) ![Easy](https://img.shields.io/badge/Easy-20-green) ![Medium](https://img.shields.io/badge/Medium-1-yellow) ![Hard](https://img.shields.io/badge/Hard-0-red)
+![Solved](https://img.shields.io/badge/Solved-22-brightgreen) ![Total](https://img.shields.io/badge/Total-22-blue) ![Easy](https://img.shields.io/badge/Easy-21-green) ![Medium](https://img.shields.io/badge/Medium-1-yellow) ![Hard](https://img.shields.io/badge/Hard-0-red)
 
 ## 📋 Problem List
 
@@ -23,16 +23,17 @@
 | 9 | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | 🟢 Easy | ✅ | Stack, Queue & Linked Lists | [Solution.java](src/main/java/com/vbforge/p_141_Linked_List_Cycle/Solution.java) |
 | 10 | [155. Min Stack](https://leetcode.com/problems/min-stack/) | 🟡 Medium | ✅ | Stack, Queue & Linked Lists | [Solution.java](src/main/java/com/vbforge/p_155_Min_Stack/Solution.java) |
 | 11 | [160. Intersection of Two Linked Lists](https://leetcode.com/problems/intersection-of-two-linked-lists/) | 🟢 Easy | ✅ | Stack, Queue & Linked Lists | [Solution.java](src/main/java/com/vbforge/p_160_Intersection_of_Two_Linked_Lists/Solution.java) |
-| 12 | [205. Isomorphic Strings](https://leetcode.com/problems/isomorphic-strings/) | 🟢 Easy | ✅ | Strings & Basic Logic | [Solution.java](src/main/java/com/vbforge/p_205_Isomorphic_Strings/Solution.java) |
-| 13 | [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | 🟢 Easy | ✅ | Arrays & Hashing Basics | [Solution.java](src/main/java/com/vbforge/p_217_Contains_Duplicate/Solution.java) |
-| 14 | [234. Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/) | 🟢 Easy | ✅ | Stack, Queue & Linked Lists | [Solution.java](src/main/java/com/vbforge/p_234_Palindrome_Linked_List/Solution.java) |
-| 15 | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | 🟢 Easy | ✅ | Arrays & Hashing Basics | [Solution.java](src/main/java/com/vbforge/p_242_Valid_Anagram/Solution.java) |
-| 16 | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | 🟢 Easy | ✅ | Arrays & Hashing Basics | [Solution.java](src/main/java/com/vbforge/p_283_Move_Zeroes/Solution.java) |
-| 17 | [344. Reverse String](https://leetcode.com/problems/reverse-string/) | 🟢 Easy | ✅ | Strings & Basic Logic | [Solution.java](src/main/java/com/vbforge/p_344_Reverse_String/Solution.java) |
-| 18 | [350. Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/) | 🟢 Easy | ✅ | Arrays & Hashing Basics | [Solution.java](src/main/java/com/vbforge/p_350_Intersection_of_Two_Arrays_II/Solution.java) |
-| 19 | [383. Ransom Note](https://leetcode.com/problems/ransom-note/) | 🟢 Easy | ✅ | Strings & Basic Logic | [Solution.java](src/main/java/com/vbforge/p_383_Ransom_Note/Solution.java) |
-| 20 | [387. First Unique Character in a String](https://leetcode.com/problems/first-unique-character-in-a-string/) | 🟢 Easy | ✅ | Strings & Basic Logic | [Solution.java](src/main/java/com/vbforge/p_387_First_Unique_Character_in_a_String/Solution.java) |
-| 21 | [541. Reverse String II](https://leetcode.com/problems/reverse-string-ii/) | 🟢 Easy | ✅ | Strings & Basic Logic | [Solution.java](src/main/java/com/vbforge/p_541_Reverse_String_II/Solution.java) |
+| 12 | [171. Excel Sheet Column Number](https://leetcode.com/problems/excel-sheet-column-number/) | 🟢 Easy | ✅ | Math, Bits & Misc | [Solution.java](src/main/java/com/vbforge/p_171_Excel_Sheet_Column_Number/Solution.java) |
+| 13 | [205. Isomorphic Strings](https://leetcode.com/problems/isomorphic-strings/) | 🟢 Easy | ✅ | Strings & Basic Logic | [Solution.java](src/main/java/com/vbforge/p_205_Isomorphic_Strings/Solution.java) |
+| 14 | [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | 🟢 Easy | ✅ | Arrays & Hashing Basics | [Solution.java](src/main/java/com/vbforge/p_217_Contains_Duplicate/Solution.java) |
+| 15 | [234. Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/) | 🟢 Easy | ✅ | Stack, Queue & Linked Lists | [Solution.java](src/main/java/com/vbforge/p_234_Palindrome_Linked_List/Solution.java) |
+| 16 | [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/) | 🟢 Easy | ✅ | Arrays & Hashing Basics | [Solution.java](src/main/java/com/vbforge/p_242_Valid_Anagram/Solution.java) |
+| 17 | [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/) | 🟢 Easy | ✅ | Arrays & Hashing Basics | [Solution.java](src/main/java/com/vbforge/p_283_Move_Zeroes/Solution.java) |
+| 18 | [344. Reverse String](https://leetcode.com/problems/reverse-string/) | 🟢 Easy | ✅ | Strings & Basic Logic | [Solution.java](src/main/java/com/vbforge/p_344_Reverse_String/Solution.java) |
+| 19 | [350. Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/) | 🟢 Easy | ✅ | Arrays & Hashing Basics | [Solution.java](src/main/java/com/vbforge/p_350_Intersection_of_Two_Arrays_II/Solution.java) |
+| 20 | [383. Ransom Note](https://leetcode.com/problems/ransom-note/) | 🟢 Easy | ✅ | Strings & Basic Logic | [Solution.java](src/main/java/com/vbforge/p_383_Ransom_Note/Solution.java) |
+| 21 | [387. First Unique Character in a String](https://leetcode.com/problems/first-unique-character-in-a-string/) | 🟢 Easy | ✅ | Strings & Basic Logic | [Solution.java](src/main/java/com/vbforge/p_387_First_Unique_Character_in_a_String/Solution.java) |
+| 22 | [541. Reverse String II](https://leetcode.com/problems/reverse-string-ii/) | 🟢 Easy | ✅ | Strings & Basic Logic | [Solution.java](src/main/java/com/vbforge/p_541_Reverse_String_II/Solution.java) |
 
 ---
-*Auto-generated. 21/21 problems solved.*
+*Auto-generated. 22/22 problems solved.*
