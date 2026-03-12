@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LeetCode Solutions — vbforge</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; }
+    header { background: linear-gradient(135deg, #161b22 0%, #1f2937 100%); padding: 48px 24px 32px; text-align: center; border-bottom: 1px solid #30363d; }
+    header h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -1px; }
+    header h1 span { color: #58a6ff; }
+    header p { color: #8b949e; margin-top: 8px; }
+    .stats { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 28px 24px 0; }
+    .stat { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 16px 28px; text-align: center; }
+    .stat .val { font-size: 2rem; font-weight: 700; color: #58a6ff; }
+    .stat .lbl { font-size: 0.78rem; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+    .controls { max-width: 1200px; margin: 32px auto 0; padding: 0 24px; }
+    input[type=search] { width: 100%; background: #161b22; border: 1px solid #30363d; border-radius: 8px; color: #e6edf3; padding: 10px 16px; font-size: 0.95rem; outline: none; margin-bottom: 16px; }
+    input[type=search]:focus { border-color: #58a6ff; }
+    .diff-filters, .tag-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .diff-btn { cursor: pointer; border: 2px solid #30363d; border-radius: 20px; padding: 5px 16px; font-size: 0.82rem; font-weight: 600; background: #161b22; color: #8b949e; transition: all .2s; }
+    .diff-btn[data-d=Easy].active   { background: #00b8a322; color:#00b8a3; border-color:#00b8a3; }
+    .diff-btn[data-d=Medium].active { background: #f0a50022; color:#f0a500; border-color:#f0a500; }
+    .diff-btn[data-d=Hard].active   { background: #ef474322; color:#ef4743; border-color:#ef4743; }
+    .tag-btn { cursor: pointer; border: 1.5px solid #58a6ff; border-radius: 20px; padding: 4px 14px; font-size: 0.78rem; font-weight: 600; background: transparent; color: #58a6ff; transition: all .2s; }
+    .tag-btn.active { background: #58a6ff; color: #0d1117; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; max-width: 1200px; margin: 24px auto 0; padding: 0 24px 48px; }
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; overflow: hidden; transition: transform .2s, box-shadow .2s; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px #00000060; }
+    .card.hidden { display: none; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; }
+    .num { font-weight: 700; font-size: 0.9rem; color: #6e7681; }
+    .diff-badge { font-size: 0.72rem; font-weight: 700; color: #fff; padding: 3px 10px; border-radius: 20px; }
+    .card-body { padding: 12px 16px 16px; }
+    .problem-title { display: block; font-weight: 600; font-size: 1rem; color: #e6edf3; text-decoration: none; margin-bottom: 8px; line-height: 1.4; }
+    .problem-title:hover { color: #58a6ff; }
+    .tag-pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; background: #58a6ff22; color: #58a6ff; }
+    .card-footer { display: flex; justify-content: space-between; align-items: center; }
+    .solved-txt { color: #3fb950; font-size: 0.8rem; font-weight: 600; }
+    .pending-txt { color: #8b949e; font-size: 0.8rem; font-weight: 600; }
+    .sol-btn { font-size: 0.8rem; font-weight: 600; color: #58a6ff; text-decoration: none; padding: 4px 10px; border: 1px solid #58a6ff33; border-radius: 6px; transition: background .2s; }
+    .sol-btn:hover { background: #58a6ff22; }
+    .sol-btn.disabled { color: #484f58; border-color: transparent; cursor: default; }
+    footer { text-align: center; padding: 24px; color: #484f58; font-size: 0.82rem; border-top: 1px solid #21262d; }
+    footer a { color: #58a6ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Leet<span>Code</span> Solutions</h1>
+  <p>vbforge · Auto-generated on every push · Java 21 + JUnit 5</p>
+</header>
+<div class="stats">
+  <div class="stat"><div class="val">20</div><div class="lbl">Solved</div></div>
+  <div class="stat"><div class="val">21</div><div class="lbl">Total</div></div>
+</div>
+<div class="controls">
+  <input type="search" id="searchInput" placeholder="Search problems…" oninput="applyFilters()"/>
+  <div class="diff-filters">
+    <button class="diff-btn" data-d="Easy" onclick="toggleDiff(this)">🟢 Easy</button>
+    <button class="diff-btn" data-d="Medium" onclick="toggleDiff(this)">🟡 Medium</button>
+    <button class="diff-btn" data-d="Hard" onclick="toggleDiff(this)">🔴 Hard</button>
+  </div>
+  <div class="tag-filters"><button class="tag-btn" data-tag="Arrays & Hashing Basics" onclick="filterTag(this)">Arrays & Hashing Basics</button><button class="tag-btn" data-tag="Strings & Basic Logic" onclick="filterTag(this)">Strings & Basic Logic</button><button class="tag-btn" data-tag="Stack, Queue & Linked Lists" onclick="filterTag(this)">Stack, Queue & Linked Lists</button></div>
+</div>
+<div class="grid" id="grid">
+    <div class="card solved" data-tag="Arrays & Hashing Basics" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#1</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/two-sum/" target="_blank">1. Two Sum</a>
+        <span class="tag-pill">Arrays & Hashing Basics</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_1_Two_Sum/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Strings & Basic Logic" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#14</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/longest-common-prefix/" target="_blank">14. Longest Common Prefix</a>
+        <span class="tag-pill">Strings & Basic Logic</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_14_Longest_Common_Prefix/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Stack, Queue & Linked Lists" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#20</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/valid-parentheses/" target="_blank">20. Valid Parentheses</a>
+        <span class="tag-pill">Stack, Queue & Linked Lists</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_20_Valid_Parentheses/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Stack, Queue & Linked Lists" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#21</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/merge-two-sorted-lists/" target="_blank">21. Merge Two Sorted Lists</a>
+        <span class="tag-pill">Stack, Queue & Linked Lists</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_21_Merge_Two_Sorted_Lists/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Arrays & Hashing Basics" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#66</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/plus-one/" target="_blank">66. Plus One</a>
+        <span class="tag-pill">Arrays & Hashing Basics</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_66_Plus_One/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Stack, Queue & Linked Lists" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#83</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/remove-duplicates-from-sorted-list/" target="_blank">83. Remove Duplicates from Sorted List</a>
+        <span class="tag-pill">Stack, Queue & Linked Lists</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_83_Remove_Duplicates_from_Sorted_List/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Arrays & Hashing Basics" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#121</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" target="_blank">121. Best Time to Buy and Sell Stock</a>
+        <span class="tag-pill">Arrays & Hashing Basics</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_121_Best_Time_to_Buy_and_Sell_Stock/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Strings & Basic Logic" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#125</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/valid-palindrome/" target="_blank">125. Valid Palindrome</a>
+        <span class="tag-pill">Strings & Basic Logic</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_125_Valid_Palindrome/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Stack, Queue & Linked Lists" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#141</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/linked-list-cycle/" target="_blank">141. Linked List Cycle</a>
+        <span class="tag-pill">Stack, Queue & Linked Lists</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_141_Linked_List_Cycle/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card pending" data-tag="Stack, Queue & Linked Lists" data-difficulty="Medium">
+      <div class="card-header" style="background:#fff8e1">
+        <span class="num">#155</span>
+        <span class="diff-badge" style="background:#f0a500">Medium</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/min-stack/" target="_blank">155. Min Stack</a>
+        <span class="tag-pill">Stack, Queue & Linked Lists</span>
+        <div class="card-footer">
+          <span class="status pending-txt">⏳ In Progress</span>
+          <span class="sol-btn disabled">No solution yet</span>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Stack, Queue & Linked Lists" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#160</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/intersection-of-two-linked-lists/" target="_blank">160. Intersection of Two Linked Lists</a>
+        <span class="tag-pill">Stack, Queue & Linked Lists</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_160_Intersection_of_Two_Linked_Lists/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Strings & Basic Logic" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#205</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/isomorphic-strings/" target="_blank">205. Isomorphic Strings</a>
+        <span class="tag-pill">Strings & Basic Logic</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_205_Isomorphic_Strings/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Arrays & Hashing Basics" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#217</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/contains-duplicate/" target="_blank">217. Contains Duplicate</a>
+        <span class="tag-pill">Arrays & Hashing Basics</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_217_Contains_Duplicate/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Stack, Queue & Linked Lists" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#234</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/palindrome-linked-list/" target="_blank">234. Palindrome Linked List</a>
+        <span class="tag-pill">Stack, Queue & Linked Lists</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_234_Palindrome_Linked_List/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Arrays & Hashing Basics" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#242</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/valid-anagram/" target="_blank">242. Valid Anagram</a>
+        <span class="tag-pill">Arrays & Hashing Basics</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_242_Valid_Anagram/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Arrays & Hashing Basics" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#283</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/move-zeroes/" target="_blank">283. Move Zeroes</a>
+        <span class="tag-pill">Arrays & Hashing Basics</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_283_Move_Zeroes/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Strings & Basic Logic" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#344</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/reverse-string/" target="_blank">344. Reverse String</a>
+        <span class="tag-pill">Strings & Basic Logic</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_344_Reverse_String/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Arrays & Hashing Basics" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#350</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/intersection-of-two-arrays-ii/" target="_blank">350. Intersection of Two Arrays II</a>
+        <span class="tag-pill">Arrays & Hashing Basics</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_350_Intersection_of_Two_Arrays_II/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Strings & Basic Logic" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#383</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/ransom-note/" target="_blank">383. Ransom Note</a>
+        <span class="tag-pill">Strings & Basic Logic</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_383_Ransom_Note/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Strings & Basic Logic" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#387</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/first-unique-character-in-a-string/" target="_blank">387. First Unique Character in a String</a>
+        <span class="tag-pill">Strings & Basic Logic</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_387_First_Unique_Character_in_a_String/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div>
+    <div class="card solved" data-tag="Strings & Basic Logic" data-difficulty="Easy">
+      <div class="card-header" style="background:#e0f8f5">
+        <span class="num">#541</span>
+        <span class="diff-badge" style="background:#00b8a3">Easy</span>
+      </div>
+      <div class="card-body">
+        <a class="problem-title" href="https://leetcode.com/problems/reverse-string-ii/" target="_blank">541. Reverse String II</a>
+        <span class="tag-pill">Strings & Basic Logic</span>
+        <div class="card-footer">
+          <span class="status solved-txt">✅ Solved</span>
+          <a class="sol-btn" href="https://github.com/vbforge/leet-code-solutions/blob/main/src/main/java/com/vbforge/p_541_Reverse_String_II/Solution.java" target="_blank">View Solution →</a>
+        </div>
+      </div>
+    </div></div>
+<footer>
+  Auto-generated by GitHub Actions ·
+  <a href="https://github.com/vbforge/leet-code-solutions" target="_blank">View on GitHub →</a>
+</footer>
+<script>
+  let activeTags = new Set(), activeDiffs = new Set();
+  function filterTag(btn) {
+    const tag = btn.dataset.tag; btn.classList.toggle('active');
+    activeTags.has(tag) ? activeTags.delete(tag) : activeTags.add(tag); applyFilters();
+  }
+  function toggleDiff(btn) {
+    const d = btn.dataset.d; btn.classList.toggle('active');
+    activeDiffs.has(d) ? activeDiffs.delete(d) : activeDiffs.add(d); applyFilters();
+  }
+  function applyFilters() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    document.querySelectorAll('.card').forEach(card => {
+      const title = card.querySelector('.problem-title').textContent.toLowerCase();
+      const ok = (!q || title.includes(q))
+        && (activeTags.size === 0  || activeTags.has(card.dataset.tag))
+        && (activeDiffs.size === 0 || activeDiffs.has(card.dataset.difficulty));
+      card.classList.toggle('hidden', !ok);
+    });
+  }
+</script>
+</body>
+</html>
