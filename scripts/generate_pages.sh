@@ -5,43 +5,30 @@ BASE_SRC="src/main/java/com/vbforge"
 REPO="${GITHUB_REPOSITORY:-your-username/leet-code-solutions}"
 GITHUB_RAW_BASE="https://github.com/${REPO}/blob/main"
 
+# ── Resolve metadata for a package ───────────────────────────────────────────
+# Priority 1: meta.txt in the package  → format: "Easy|Arrays & Hashing Basics"
+# Priority 2: auto-derive slug from folder name, default diff+tag
 get_meta() {
-  case "$1" in
-    1)   echo "two-sum|Easy|Arrays & Hashing Basics" ;;
-    9)   echo "palindrome-number|Easy|Math, Bits & Misc" ;;
-    66)  echo "plus-one|Easy|Arrays & Hashing Basics" ;;
-    121) echo "best-time-to-buy-and-sell-stock|Easy|Arrays & Hashing Basics" ;;
-    217) echo "contains-duplicate|Easy|Arrays & Hashing Basics" ;;
-    242) echo "valid-anagram|Easy|Arrays & Hashing Basics" ;;
-    283) echo "move-zeroes|Easy|Arrays & Hashing Basics" ;;
-    350) echo "intersection-of-two-arrays-ii|Easy|Arrays & Hashing Basics" ;;
-    14)  echo "longest-common-prefix|Easy|Strings & Basic Logic" ;;
-    125) echo "valid-palindrome|Easy|Strings & Basic Logic" ;;
-    205) echo "isomorphic-strings|Easy|Strings & Basic Logic" ;;
-    344) echo "reverse-string|Easy|Strings & Basic Logic" ;;
-    383) echo "ransom-note|Easy|Strings & Basic Logic" ;;
-    387) echo "first-unique-character-in-a-string|Easy|Strings & Basic Logic" ;;
-    541) echo "reverse-string-ii|Easy|Strings & Basic Logic" ;;
-    20)  echo "valid-parentheses|Easy|Stack, Queue & Linked Lists" ;;
-    21)  echo "merge-two-sorted-lists|Easy|Stack, Queue & Linked Lists" ;;
-    83)  echo "remove-duplicates-from-sorted-list|Easy|Stack, Queue & Linked Lists" ;;
-    141) echo "linked-list-cycle|Easy|Stack, Queue & Linked Lists" ;;
-    155) echo "min-stack|Medium|Stack, Queue & Linked Lists" ;;
-    160) echo "intersection-of-two-linked-lists|Easy|Stack, Queue & Linked Lists" ;;
-    234) echo "palindrome-linked-list|Easy|Stack, Queue & Linked Lists" ;;
-    171) echo "excel-sheet-column-number|Easy|Math, Bits & Misc" ;;
-    202) echo "happy-number|Easy|Math, Bits & Misc" ;;
-    204) echo "count-primes|Medium|Math, Bits & Misc" ;;
-    268) echo "missing-number|Easy|Math, Bits & Misc" ;;
-    326) echo "power-of-three|Easy|Math, Bits & Misc" ;;
-    412) echo "fizz-buzz|Easy|Math, Bits & Misc" ;;
-    136) echo "single-number|Easy|Math, Bits & Misc" ;;
-    169) echo "majority-element|Easy|Math, Bits & Misc" ;;
-    461) echo "hamming-distance|Easy|Math, Bits & Misc" ;;
-    *)   echo "$(echo "$2" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')|Easy|Uncategorized" ;;
-  esac
+  local pkg="$1"
+  local title="$2"
+
+  local meta_file="$BASE_SRC/$pkg/meta.txt"
+  local slug diff tag
+
+  slug=$(echo "$title" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+
+  if [ -f "$meta_file" ]; then
+    diff=$(cut -d'|' -f1 < "$meta_file" | tr -d '[:space:]')
+    tag=$(cut -d'|' -f2- < "$meta_file" | sed 's/^[[:space:]]*//')
+  else
+    diff="Easy"
+    tag="Uncategorized"
+  fi
+
+  echo "${slug}|${diff}|${tag}"
 }
 
+# ── Collect packages ──────────────────────────────────────────────────────────
 PACKAGES=$(find "$BASE_SRC" -maxdepth 1 -type d -name 'p_*' \
   | sed 's|.*/||' \
   | sort -t_ -k2 -n)
@@ -49,6 +36,7 @@ PACKAGES=$(find "$BASE_SRC" -maxdepth 1 -type d -name 'p_*' \
 total=0; solved=0
 CARDS=""
 SEEN_TAGS=""
+TAG_BUTTONS=""
 
 while IFS= read -r pkg; do
   [ -z "$pkg" ] && continue
@@ -56,7 +44,7 @@ while IFS= read -r pkg; do
   num=$(echo "$pkg" | cut -d_ -f2)
   raw=$(echo "$pkg" | cut -d_ -f3-)
   title="${raw//_/ }"
-  meta=$(get_meta "$num" "$title")
+  meta=$(get_meta "$pkg" "$title")
   slug=$(echo "$meta" | cut -d'|' -f1)
   diff=$(echo "$meta" | cut -d'|' -f2)
   tag=$(echo "$meta" | cut -d'|' -f3)
@@ -96,10 +84,9 @@ while IFS= read -r pkg; do
       </div>
     </div>"
 
-  # Collect unique tags
   if ! echo "$SEEN_TAGS" | grep -qF "|${tag}|"; then
     SEEN_TAGS="${SEEN_TAGS}|${tag}|"
-    TAG_BUTTONS="${TAG_BUTTONS:-}<button class=\"tag-btn\" data-tag=\"${tag}\" onclick=\"filterTag(this)\">${tag}</button>"
+    TAG_BUTTONS="${TAG_BUTTONS}<button class=\"tag-btn\" data-tag=\"${tag}\" onclick=\"filterTag(this)\">${tag}</button>"
   fi
 done <<< "$PACKAGES"
 
