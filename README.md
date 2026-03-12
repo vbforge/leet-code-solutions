@@ -4,7 +4,7 @@
 
 ## 📊 Progress
 
-![Solved](https://img.shields.io/badge/Solved-20-brightgreen) ![Total](https://img.shields.io/badge/Total-21-blue) ![Easy](https://img.shields.io/badge/Easy-20-green) ![Medium](https://img.shields.io/badge/Medium-1-yellow) ![Hard](https://img.shields.io/badge/Hard-0-red)
+![Solved](https://img.shields.io/badge/Solved-21-brightgreen) ![Total](https://img.shields.io/badge/Total-21-blue) ![Easy](https://img.shields.io/badge/Easy-20-green) ![Medium](https://img.shields.io/badge/Medium-1-yellow) ![Hard](https://img.shields.io/badge/Hard-0-red)
 
 ## 📋 Problem List
 
@@ -21,7 +21,7 @@
 | 7 | [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | 🟢 Easy | ✅ | Arrays & Hashing Basics | [Solution.java](src/main/java/com/vbforge/p_121_Best_Time_to_Buy_and_Sell_Stock/Solution.java) |
 | 8 | [125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) | 🟢 Easy | ✅ | Strings & Basic Logic | [Solution.java](src/main/java/com/vbforge/p_125_Valid_Palindrome/Solution.java) |
 | 9 | [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | 🟢 Easy | ✅ | Stack, Queue & Linked Lists | [Solution.java](src/main/java/com/vbforge/p_141_Linked_List_Cycle/Solution.java) |
-| 10 | [155. Min Stack](https://leetcode.com/problems/min-stack/) | 🟡 Medium | ⏳ | Stack, Queue & Linked Lists | — |
+| 10 | [155. Min Stack](https://leetcode.com/problems/min-stack/) | 🟡 Medium | ✅ | Stack, Queue & Linked Lists | [Solution.java](src/main/java/com/vbforge/p_155_Min_Stack/Solution.java) |
 | 11 | [160. Intersection of Two Linked Lists](https://leetcode.com/problems/intersection-of-two-linked-lists/) | 🟢 Easy | ✅ | Stack, Queue & Linked Lists | [Solution.java](src/main/java/com/vbforge/p_160_Intersection_of_Two_Linked_Lists/Solution.java) |
 | 12 | [205. Isomorphic Strings](https://leetcode.com/problems/isomorphic-strings/) | 🟢 Easy | ✅ | Strings & Basic Logic | [Solution.java](src/main/java/com/vbforge/p_205_Isomorphic_Strings/Solution.java) |
 | 13 | [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | 🟢 Easy | ✅ | Arrays & Hashing Basics | [Solution.java](src/main/java/com/vbforge/p_217_Contains_Duplicate/Solution.java) |
@@ -35,4 +35,4 @@
 | 21 | [541. Reverse String II](https://leetcode.com/problems/reverse-string-ii/) | 🟢 Easy | ✅ | Strings & Basic Logic | [Solution.java](src/main/java/com/vbforge/p_541_Reverse_String_II/Solution.java) |
 
 ---
-*Auto-generated. 20/21 problems solved.*
+*Auto-generated. 21/21 problems solved.*
