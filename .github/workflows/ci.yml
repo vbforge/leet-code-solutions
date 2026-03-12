@@ -51,18 +51,16 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      - name: Make scripts executable
+        run: chmod +x scripts/generate_readme.sh scripts/generate_pages.sh
 
       - name: Generate README.md
-        run: python scripts/generate_readme.py
+        run: bash scripts/generate_readme.sh
 
       - name: Generate docs/index.html (GitHub Pages)
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
-        run: python scripts/generate_pages.py
+        run: bash scripts/generate_pages.sh
 
       - name: Commit generated files
         run: |
