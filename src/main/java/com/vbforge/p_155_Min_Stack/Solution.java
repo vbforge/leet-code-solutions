@@ -3,12 +3,12 @@ package com.vbforge.p_155_Min_Stack;
 
 import java.util.Stack;
 
-public class MinStack {
+public class Solution {
 
     private final Stack<Integer> mainStack;
     private final Stack<Integer> minStack;
 
-    public MinStack() {
+    public Solution() {
         this.mainStack = new Stack<>();
         this.minStack = new Stack<>();
     }
@@ -36,8 +36,8 @@ public class MinStack {
     }
 
     /**
-     * Your MinStack object will be instantiated and called as such:
-     * MinStack obj = new MinStack();
+     * Your Solution object will be instantiated and called as such:
+     * Solution obj = new Solution();
      * obj.push(val);
      * obj.pop();
      * int param_3 = obj.top();
@@ -45,14 +45,14 @@ public class MinStack {
      */
 
     public static void main(String[] args) {
-        MinStack minStack = new MinStack();
-        minStack.push(-2);
-        minStack.push(0);
-        minStack.push(-3);
-        System.out.println(minStack.getMin()); // -3
-        minStack.pop();
-        System.out.println(minStack.top());    // 0
-        System.out.println(minStack.getMin()); // -2
+        Solution solution = new Solution();
+        solution.push(-2);
+        solution.push(0);
+        solution.push(-3);
+        System.out.println(solution.getMin()); // -3
+        solution.pop();
+        System.out.println(solution.top());    // 0
+        System.out.println(solution.getMin()); // -2
     }
 
 }
