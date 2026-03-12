@@ -8,6 +8,7 @@ GITHUB_RAW_BASE="https://github.com/${REPO}/blob/main"
 get_meta() {
   case "$1" in
     1)   echo "two-sum|Easy|Arrays & Hashing Basics" ;;
+    9)   echo "palindrome-number|Easy|Math, Bits & Misc" ;;
     66)  echo "plus-one|Easy|Arrays & Hashing Basics" ;;
     121) echo "best-time-to-buy-and-sell-stock|Easy|Arrays & Hashing Basics" ;;
     217) echo "contains-duplicate|Easy|Arrays & Hashing Basics" ;;
